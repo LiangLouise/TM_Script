@@ -19,43 +19,29 @@
     }
 
     function hide_login_form() {
-
         let login_button = document.querySelector('.Button.AppHeader-login.Button--blue');
         if (!login_button) return;
 
         const login_class = ".Modal.Modal--default.signFlowModal";
-        const root = document.documentElement;
-        const config = {attributes: true};
-        
+        const config = {childList: true};
         const mutateCallBack = function(mutationsList, observer) {
             for(let mutation of mutationsList) {
                 // When it tries to disable scrollbar
-                if (mutation.type === 'attributes' && root.attributes.style) {
+                if (mutation.type === 'childList' && document.querySelector(login_class)) {
+                    console.log(mutation);
                     // Remove the log in form div
                     document.querySelector(login_class).parentElement.parentElement.remove();
                     // Remove the style at root disabling scrollbar
-                    root.removeAttribute('style');
+                    document.documentElement.removeAttribute('style');
                 }
             }
         };
 
         // Create an observer instance linked to the callback function
         const observer = new MutationObserver(mutateCallBack);
-
-        let scrollTimer;
-        // Start observing the target node for configured mutations while scrolling
-        window.addEventListener('scroll', function() {
-
-            observer.observe(root, config);
-
-            if(!scrollTimer) clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(function() {
-                observer.disconnect();
-            }, 150);
-        });
-        
-        return observer;
+        observer.observe(document.body, config);
     }
+
 
     delete_adb_banner();
     hide_login_form();
