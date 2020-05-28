@@ -18,7 +18,7 @@
         if (banner) banner.remove();
     }
 
-    function hide_login_form() {
+    function hide_login_form_scrolling() {
         let login_button = document.querySelector('.Button.AppHeader-login.Button--blue');
         if (!login_button) return;
 
@@ -28,7 +28,6 @@
             for(let mutation of mutationsList) {
                 // When it tries to disable scrollbar
                 if (mutation.type === 'childList' && document.querySelector(login_class)) {
-                    console.log(mutation);
                     // Remove the log in form div
                     document.querySelector(login_class).parentElement.parentElement.remove();
                     // Remove the style at root disabling scrollbar
@@ -36,14 +35,54 @@
                 }
             }
         };
+ 
+        const observer = new MutationObserver(mutateCallBack);
+
+        var timer = null;
+        window.addEventListener('scroll', function(){
+            // Create an observer instance linked to the callback function
+            
+            observer.observe(document.body, config);
+            if(timer !== null) {
+                clearTimeout(timer);        
+            }
+            timer = setTimeout(function() {
+                  observer.disconnect();
+            }, 150);
+        })
+    }
+
+    function hide_login_form_initial() {
+        let login_button = document.querySelector('.Button.AppHeader-login.Button--blue');
+        if (!login_button) return;
+
+        const login_class = ".Modal.Modal--default.signFlowModal";
+        const config = {childList: true};
+        let observer_2;
+        const mutateCallBack = function(mutationsList, observer) {
+            for(let mutation of mutationsList) {
+                // When it tries to disable scrollbar
+                if (mutation.type === 'childList' && document.querySelector(login_class)) {
+                    // Remove the log in form div
+                    document.querySelector(login_class).parentElement.parentElement.remove();
+                    // Remove the style at root disabling scrollbar
+                    document.documentElement.removeAttribute('style');
+                    observer_2.disconnect();
+                }
+            }
+        };
 
         // Create an observer instance linked to the callback function
-        const observer = new MutationObserver(mutateCallBack);
-        observer.observe(document.body, config);
+        observer_2 = new MutationObserver(mutateCallBack);
+        observer_2.observe(document.body, config);
+        setTimeout(function(){
+            observer_2.disconnect();
+        }, 200);
     }
 
 
     delete_adb_banner();
-    hide_login_form();
+    hide_login_form_initial();
+    hide_login_form_scrolling();
     
 })();
