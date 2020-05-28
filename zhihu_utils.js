@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         禁止知乎自动弹出登录
 // @namespace    https://github.com/LiangLouise/TM_Script
+// @homepageURL  https://github.com/LiangLouise/TM_Script
 // @version      0.0.1
 // @description  disable the pop up of zhihu login form
-// @author       You
+// @author       LiangLouise
 // @match        https://www.zhihu.com/*
 // @grant        none
 // ==/UserScript==
