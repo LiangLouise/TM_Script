@@ -7,6 +7,9 @@
 // @author       LiangLouise
 // @match        https://www.zhihu.com/*
 // @grant        none
+// @compatible   chrome
+// @compatible   firefox
+// @license      MIT
 // ==/UserScript==
 
 (function() {
