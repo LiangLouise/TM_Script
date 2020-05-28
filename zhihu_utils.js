@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         禁止知乎自动弹出登录
+// @name         知乎页面优化
 // @namespace    https://github.com/LiangLouise/TM_Script
 // @homepageURL  https://github.com/LiangLouise/TM_Script
 // @version      0.0.1
